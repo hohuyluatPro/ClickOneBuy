@@ -1,6 +1,8 @@
 package com.online.CBuy.api;
 
 import com.online.CBuy.document.Account;
+import com.online.CBuy.dto.LoginDto;
+import com.online.CBuy.dto.PostAccount;
 import com.online.CBuy.repository.AccountRepository;
 import com.online.CBuy.tUtils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +37,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Account account) {
+    public ResponseEntity<?> login(@RequestBody LoginDto account) {
         Optional<Account> existingAccount = accountRepository.findByUsername(account.getUsername());
         if (existingAccount.isPresent() && passwordEncoder.matches(account.getPassword(), existingAccount.get().getPassword())) {
-            String token = jwtUtil.generateToken(account.getUsername());
+            String token = jwtUtil.generateToken(existingAccount.get());
             return ResponseEntity.ok(Map.of("token", token));
         }
         return ResponseEntity.status(401).body("Invalid username or password");

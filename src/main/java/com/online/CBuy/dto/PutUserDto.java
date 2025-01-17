@@ -15,11 +15,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class PutUserDto implements Serializable {
 
-    @JsonProperty("name")
-    private String name;
+    private ObjectId id;
 
-    @JsonProperty("email")
-    private String email;
+    @JsonProperty("username")
+    private String username;
+
+    @JsonProperty("password")
+    private String password;
 
     @JsonProperty("identifiNumber")
     private String identifiNumber;
@@ -41,4 +43,7 @@ public class PutUserDto implements Serializable {
 
     @JsonProperty("cardId")
     private ObjectId cardId;
+
+    @JsonProperty("role")
+    private String role;
 }

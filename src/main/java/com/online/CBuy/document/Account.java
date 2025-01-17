@@ -1,30 +1,54 @@
 package com.online.CBuy.document;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.online.CBuy.pojo.Agency;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "account") // Đặt tên collection là "accounts"
 public class Account {
 
     @Id
-    private String id;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private ObjectId id;
+
+    @JsonProperty("username")
     private String username;
+
+    @JsonProperty("password")
     private String password;
 
-    public String getUsername() {
-        return username;
-    }
+    @JsonProperty("identifiNumber")
+    private String identifiNumber;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @JsonProperty("phoneNumber")
+    private String phoneNumber;
 
-    public String getPassword() {
-        return password;
-    }
+    @JsonProperty("address")
+    private String address;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @JsonProperty("province")
+    private Agency province;
 
+    @JsonProperty("district")
+    private Agency district;
+
+    @JsonProperty("village")
+    private Agency village;
+
+    @JsonProperty("cardId")
+    private ObjectId cardId;
+
+    @JsonProperty("role")
+    private String role;
 }

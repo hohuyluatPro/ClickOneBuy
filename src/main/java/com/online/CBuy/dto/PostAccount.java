@@ -9,16 +9,16 @@ import org.bson.types.ObjectId;
 
 import java.io.Serializable;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostUserDto implements Serializable {
+public class PostAccount implements Serializable {
+    @JsonProperty("username")
+    private String username;
 
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("email")
-    private String email;
+    @JsonProperty("password")
+    private String password;
 
     @JsonProperty("identifiNumber")
     private String identifiNumber;
@@ -40,4 +40,7 @@ public class PostUserDto implements Serializable {
 
     @JsonProperty("cardId")
     private ObjectId cardId;
+
+    @JsonProperty("role")
+    private String role;
 }

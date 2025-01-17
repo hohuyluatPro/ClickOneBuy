@@ -1,9 +1,18 @@
 package com.online.CBuy.api;
 
 import com.online.CBuy.document.Account;
+import com.online.CBuy.dto.AffectedRowsDto;
+import com.online.CBuy.dto.GetAccountDto;
+import com.online.CBuy.dto.PostAccount;
+import com.online.CBuy.dto.PutUserDto;
 import com.online.CBuy.repository.AccountRepository;
+import com.online.CBuy.service.AccountService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,65 +26,63 @@ public class AccountController {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private AccountService accountService;
+
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // CREATE: Thêm mới tài khoản
     @PostMapping
-    public ResponseEntity<?> createAccount(@RequestBody Account account) {
-        // Kiểm tra nếu username đã tồn tại
-        if (accountRepository.findByUsername(account.getUsername()).isPresent()) {
-            return ResponseEntity.badRequest().body("Username already exists");
-        }
-        // Mã hóa mật khẩu
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
-        Account savedAccount = accountRepository.save(account);
-        return ResponseEntity.ok(savedAccount);
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public AffectedRowsDto createAccount(HttpServletRequest request, @RequestBody PostAccount account) {
+        String requestPath = request.getMethod() + " " + request.getRequestURI()
+                + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        Logger logger = LoggerFactory.getLogger(AccountController.class);
+        logger.info("DIGO-Info: " + requestPath);
+        return accountService.postAccount(account);
     }
 
     // READ: Lấy danh sách tất cả tài khoản
     @GetMapping
-    public ResponseEntity<List<Account>> getAllAccounts() {
-        List<Account> accounts = accountRepository.findAll();
-        return ResponseEntity.ok(accounts);
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public List<Account> getAllAccounts(HttpServletRequest request) {
+        String requestPath = request.getMethod() + " " + request.getRequestURI()
+                + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        Logger logger = LoggerFactory.getLogger(AccountController.class);
+        logger.info("DIGO-Info: " + requestPath);
+        return accountService.getListAccount();
     }
 
     // READ: Lấy thông tin tài khoản theo ID
     @GetMapping("/{id}")
-    public ResponseEntity<?> getAccountById(@PathVariable String id) {
-        Optional<Account> account = accountRepository.findById(id);
-        if (account.isPresent()) {
-            return ResponseEntity.ok(account.get());
-        } else {
-            return ResponseEntity.status(404).body("Account not found");
-        }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public GetAccountDto getAccountById(HttpServletRequest request, @PathVariable String id) {
+        String requestPath = request.getMethod() + " " + request.getRequestURI()
+                + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        Logger logger = LoggerFactory.getLogger(AccountController.class);
+        logger.info("DIGO-Info: " + requestPath);
+        return accountService.getAccount(id);
     }
 
     // UPDATE: Cập nhật tài khoản
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateAccount(@PathVariable String id, @RequestBody Account updatedAccount) {
-        Optional<Account> existingAccount = accountRepository.findById(id);
-        if (existingAccount.isPresent()) {
-            Account account = existingAccount.get();
-            account.setUsername(updatedAccount.getUsername());
-            if (updatedAccount.getPassword() != null && !updatedAccount.getPassword().isEmpty()) {
-                account.setPassword(passwordEncoder.encode(updatedAccount.getPassword()));
-            }
-            Account savedAccount = accountRepository.save(account);
-            return ResponseEntity.ok(savedAccount);
-        } else {
-            return ResponseEntity.status(404).body("Account not found");
-        }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public AffectedRowsDto updateAccount(HttpServletRequest request, @PathVariable String id, @RequestBody PutUserDto updatedAccount) {
+        String requestPath = request.getMethod() + " " + request.getRequestURI()
+                + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        Logger logger = LoggerFactory.getLogger(AccountController.class);
+        logger.info("DIGO-Info: " + requestPath);
+        return accountService.putAccount(id, updatedAccount);
     }
 
     // DELETE: Xóa tài khoản
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAccount(@PathVariable String id) {
-        Optional<Account> existingAccount = accountRepository.findById(id);
-        if (existingAccount.isPresent()) {
-            accountRepository.deleteById(id);
-            return ResponseEntity.ok("Account deleted successfully");
-        } else {
-            return ResponseEntity.status(404).body("Account not found");
-        }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public AffectedRowsDto deleteAccount(HttpServletRequest request, @PathVariable String id) {
+        String requestPath = request.getMethod() + " " + request.getRequestURI()
+                + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        Logger logger = LoggerFactory.getLogger(AccountController.class);
+        logger.info("DIGO-Info: " + requestPath);
+        return accountService.deleteAccount(id);
     }
 }
