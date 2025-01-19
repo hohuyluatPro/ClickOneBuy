@@ -1,17 +1,23 @@
 package com.online.CBuy.tUtils;
 
 import com.online.CBuy.document.Account;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.security.Keys;
+
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class JwtUtil {
+
 
 //    private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Khóa bí mật, nên lưu trong biến môi trường
       String secretKey = "701f3c4ea36b48cacb4fb3576978cd792a7e3388ba8389874fb222d6fcc0dcea"; // Khóa phải giống nhau
@@ -52,4 +58,5 @@ public class JwtUtil {
                 .getExpiration()
                 .before(new Date());
     }
+
 }

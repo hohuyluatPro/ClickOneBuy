@@ -1,8 +1,8 @@
 package com.online.CBuy.filter;
 
-import com.online.CBuy.document.Account;
 import com.online.CBuy.document.CustomerAccount;
 import com.online.CBuy.repository.AccountRepository;
+import com.online.CBuy.service.JwtBlacklistService;
 import com.online.CBuy.tUtils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,6 +28,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private AccountRepository accountRepository;
 
+    private final JwtBlacklistService jwtBlacklistService;
+
+    public JwtRequestFilter(JwtBlacklistService jwtBlacklistService) {
+        this.jwtBlacklistService = jwtBlacklistService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -37,6 +43,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
+            if(jwtBlacklistService.isTokenBlacklisted(jwt)){
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token is blacklisted.");
+                return;
+            }
             userID = jwtUtil.extractUsername(jwt);
             UserDetails account = new CustomerAccount(accountRepository.findOneById(new ObjectId(userID)));
             if (account != null) {

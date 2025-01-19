@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
@@ -123,10 +124,10 @@ public class AccountService {
         return  affectedRowsDto;
     }
 
-    public List<Account> getListAccount(){
+    public List<GetAccountDto> getListAccount(){
         List<Account> result = mongoTemplate.findAll(Account.class);
-        return result;
-//        return result.stream().map(doc -> new GetAccountDto(doc.getUsername(), doc.getRole()));
+//        return result;
+        return result.stream().map(doc -> new GetAccountDto(doc)).collect(Collectors.toList());
     }
 
     public GetAccountDto getAccount(String id){

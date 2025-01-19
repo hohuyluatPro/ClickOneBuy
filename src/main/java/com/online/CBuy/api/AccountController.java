@@ -45,7 +45,7 @@ public class AccountController {
     // READ: Lấy danh sách tất cả tài khoản
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public List<Account> getAllAccounts(HttpServletRequest request) {
+    public List<GetAccountDto> getAllAccounts(HttpServletRequest request) {
         String requestPath = request.getMethod() + " " + request.getRequestURI()
                 + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
         Logger logger = LoggerFactory.getLogger(AccountController.class);
