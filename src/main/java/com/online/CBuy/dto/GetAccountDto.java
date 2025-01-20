@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -21,8 +22,9 @@ public class GetAccountDto {
     @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
 
-    @JsonProperty("username")
     private String username;
+
+    private String fullName;
 
     private String identifiNumber;
 
@@ -38,8 +40,11 @@ public class GetAccountDto {
 
     private ObjectId cardId;
 
-    @JsonProperty("role")
     private String role;
+
+    private Date createdDate;
+
+    private Date updatedDate;
 
     public GetAccountDto(Account account){
         this.username = account.getUsername();
@@ -51,5 +56,8 @@ public class GetAccountDto {
         this.village = account.getVillage();
         this.cardId = account.getCardId();
         this.role = account.getRole();
+        this.fullName = account.getFullName();
+        this.createdDate = account.getCreatedDate();
+        this.updatedDate = account.getUpdateDate();
     }
 }

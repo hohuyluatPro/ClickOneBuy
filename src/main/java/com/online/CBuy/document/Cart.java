@@ -1,6 +1,7 @@
 package com.online.CBuy.document;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Cart {
     @Id
     @JsonSerialize(using = ToStringSerializer.class)
-    private String id;
+    private ObjectId id;
 
     private ObjectId productId;
 

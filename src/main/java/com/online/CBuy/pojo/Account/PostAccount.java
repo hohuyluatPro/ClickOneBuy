@@ -1,4 +1,4 @@
-package com.online.CBuy.dto;
+package com.online.CBuy.pojo.Account;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.online.CBuy.pojo.Agency;
@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 @Data
@@ -16,6 +18,9 @@ import java.io.Serializable;
 public class PostAccount implements Serializable {
     @JsonProperty("username")
     private String username;
+
+    @JsonProperty("fullName")
+    private String fullName;
 
     @JsonProperty("password")
     private String password;

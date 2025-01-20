@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 
 @Data
@@ -22,33 +25,42 @@ public class Account {
     @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
 
-    @JsonProperty("username")
+
     private String username;
 
-    @JsonProperty("password")
+
+    private String fullName;
+
+
     private String password;
 
-    @JsonProperty("identifiNumber")
+
     private String identifiNumber;
 
-    @JsonProperty("phoneNumber")
+
     private String phoneNumber;
 
-    @JsonProperty("address")
+
     private String address;
 
-    @JsonProperty("province")
+
     private Agency province;
 
-    @JsonProperty("district")
+
     private Agency district;
 
-    @JsonProperty("village")
+
     private Agency village;
 
-    @JsonProperty("cardId")
+
     private ObjectId cardId;
 
-    @JsonProperty("role")
+
     private String role;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private Date createdDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private Date updateDate;
 }

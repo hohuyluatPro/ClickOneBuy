@@ -19,7 +19,7 @@ import java.util.List;
 public class Order {
     @Id
     @JsonSerialize(using = ToStringSerializer.class)
-    private String id;
+    private ObjectId id;
 
     private ObjectId userId;
 

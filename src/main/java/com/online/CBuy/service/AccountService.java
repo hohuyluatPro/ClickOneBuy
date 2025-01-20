@@ -4,21 +4,18 @@ package com.online.CBuy.service;
 import com.online.CBuy.document.Account;
 import com.online.CBuy.dto.AffectedRowsDto;
 import com.online.CBuy.dto.GetAccountDto;
-import com.online.CBuy.dto.PostAccount;
-import com.online.CBuy.dto.PutUserDto;
+import com.online.CBuy.pojo.Account.PostAccount;
+import com.online.CBuy.pojo.Account.PutAccount;
 import com.online.CBuy.repository.AccountRepository;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +32,7 @@ public class AccountService {
 
     public AffectedRowsDto postAccount(PostAccount postAccount){
         AffectedRowsDto affectedRowsDto = new AffectedRowsDto(0);
+        Date date = new Date();
         Optional<Account> account = accountRepository.findByUsername(postAccount.getUsername());
         // Kiểm tra nếu username đã tồn tại
         if (account.isPresent()) {
@@ -48,6 +46,9 @@ public class AccountService {
         }
         if(Objects.nonNull(postAccount.getPassword())){
             account1.setPassword(passwordEncoder.encode(postAccount.getPassword()));
+        }
+        if(Objects.nonNull(postAccount.getFullName())){
+            account1.setFullName(postAccount.getFullName());
         }
         if(Objects.nonNull(postAccount.getIdentifiNumber())){
             account1.setIdentifiNumber(postAccount.getIdentifiNumber());
@@ -70,6 +71,8 @@ public class AccountService {
         if(Objects.nonNull(postAccount.getDistrict())){
             account1.setDistrict(postAccount.getDistrict());
         }
+        account1.setCreatedDate(date);
+        account1.setUpdateDate(date);
         try {
             accountRepository.save(account1);
             affectedRowsDto.setAffectedRows(1);
@@ -81,7 +84,11 @@ public class AccountService {
     }
 
 
-    public AffectedRowsDto putAccount(String id, PutUserDto putAccount){
+    public AffectedRowsDto putAccount(String id, PutAccount putAccount){
+//        TimeZone timezone = TimeZone.getTimeZone("Asia/Ho_Chi_Minh");
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+//        df.setTimeZone(timezone);
+        Date date = new Date();
         AffectedRowsDto affectedRowsDto = new AffectedRowsDto(0);
         Optional<Account> existingAccount = accountRepository.findById(id);
         if (existingAccount.isPresent()) {
@@ -91,6 +98,9 @@ public class AccountService {
             }
             if (Objects.nonNull(putAccount.getPassword())) {
                 account1.setPassword(passwordEncoder.encode(putAccount.getPassword()));
+            }
+            if(Objects.nonNull(putAccount.getFullName())){
+                account1.setFullName(putAccount.getFullName());
             }
             if (Objects.nonNull(putAccount.getIdentifiNumber())) {
                 account1.setIdentifiNumber(putAccount.getIdentifiNumber());
@@ -113,6 +123,7 @@ public class AccountService {
             if (Objects.nonNull(putAccount.getDistrict())) {
                 account1.setDistrict(putAccount.getDistrict());
             }
+            account1.setUpdateDate(date);
             try {
                 accountRepository.save(account1);
                 affectedRowsDto.setAffectedRows(1);

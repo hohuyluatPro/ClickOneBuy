@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 "/swagger-ui.html" ).permitAll() // Cho phép không cần xác thực
                         .anyRequest().authenticated() // Các API khác yêu cầu xác thực
                 )
-                .oauth2Login(ao -> ao.defaultSuccessUrl("/home").failureUrl("/login"))
+//                .oauth2Login(ao -> ao.defaultSuccessUrl("/home").failureUrl("/login"))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
         .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

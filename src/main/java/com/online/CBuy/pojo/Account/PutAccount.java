@@ -1,4 +1,4 @@
-package com.online.CBuy.dto;
+package com.online.CBuy.pojo.Account;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.online.CBuy.pojo.Agency;
@@ -13,12 +13,15 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PutUserDto implements Serializable {
+public class PutAccount implements Serializable {
 
     private ObjectId id;
 
     @JsonProperty("username")
     private String username;
+
+    @JsonProperty("fullName")
+    private String fullName;
 
     @JsonProperty("password")
     private String password;

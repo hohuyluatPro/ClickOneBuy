@@ -1,11 +1,10 @@
 package com.online.CBuy.api;
 
+import com.online.CBuy.document.Discount;
 import com.online.CBuy.dto.AffectedRowsDto;
-import com.online.CBuy.dto.GetAccountDto;
-import com.online.CBuy.pojo.Account.PostAccount;
-import com.online.CBuy.pojo.Account.PutAccount;
-import com.online.CBuy.repository.AccountRepository;
-import com.online.CBuy.service.AccountService;
+import com.online.CBuy.pojo.Discount.SetDiscount;
+import com.online.CBuy.repository.DiscountRepository;
+import com.online.CBuy.service.DiscountService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,67 +15,60 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/accounts")
-public class AccountController {
+@RequestMapping("/api/discount")
+public class DiscountController {
+    @Autowired
+    private DiscountRepository discountRepository;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private DiscountService discountService;
 
-    @Autowired
-    private AccountService accountService;
-
-    // CREATE: Thêm mới tài khoản
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public AffectedRowsDto createAccount(HttpServletRequest request, @RequestBody PostAccount account) {
+    public AffectedRowsDto postDiscount(HttpServletRequest request, @RequestBody SetDiscount postDiscount){
         String requestPath = request.getMethod() + " " + request.getRequestURI()
                 + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
-        Logger logger = LoggerFactory.getLogger(AccountController.class);
+        Logger logger = LoggerFactory.getLogger(DiscountController.class);
         logger.info("DIGO-Info: " + requestPath);
-        return accountService.postAccount(account);
+        return discountService.postDiscount(postDiscount);
     }
 
-    // READ: Lấy danh sách tất cả tài khoản
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public List<GetAccountDto> getAllAccounts(HttpServletRequest request) {
-        String requestPath = request.getMethod() + " " + request.getRequestURI()
-                + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
-        Logger logger = LoggerFactory.getLogger(AccountController.class);
-        logger.info("DIGO-Info: " + requestPath);
-        return accountService.getListAccount();
-    }
-
-    // READ: Lấy thông tin tài khoản theo ID
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public GetAccountDto getAccountById(HttpServletRequest request, @PathVariable String id) {
-        String requestPath = request.getMethod() + " " + request.getRequestURI()
-                + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
-        Logger logger = LoggerFactory.getLogger(AccountController.class);
-        logger.info("DIGO-Info: " + requestPath);
-        return accountService.getAccount(id);
-    }
-
-    // UPDATE: Cập nhật tài khoản
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public AffectedRowsDto updateAccount(HttpServletRequest request, @PathVariable String id, @RequestBody PutAccount updatedAccount) {
+    public AffectedRowsDto putDiscount(HttpServletRequest request, @PathVariable String id, @RequestBody SetDiscount putDiscount){
         String requestPath = request.getMethod() + " " + request.getRequestURI()
                 + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
-        Logger logger = LoggerFactory.getLogger(AccountController.class);
+        Logger logger = LoggerFactory.getLogger(DiscountController.class);
         logger.info("DIGO-Info: " + requestPath);
-        return accountService.putAccount(id, updatedAccount);
+        return discountService.putDiscount(id, putDiscount);
+    }
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public List<Discount> getAllDiscount(HttpServletRequest request){
+        String requestPath = request.getMethod() + " " + request.getRequestURI()
+                + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        Logger logger = LoggerFactory.getLogger(DiscountController.class);
+        logger.info("DIGO-Info: " + requestPath);
+        return discountService.getListAllDiscount();
     }
 
-    // DELETE: Xóa tài khoản
-    @DeleteMapping("/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public AffectedRowsDto deleteAccount(HttpServletRequest request, @PathVariable String id) {
+    public Discount getDiscount(HttpServletRequest request, @PathVariable String id){
         String requestPath = request.getMethod() + " " + request.getRequestURI()
                 + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
-        Logger logger = LoggerFactory.getLogger(AccountController.class);
+        Logger logger = LoggerFactory.getLogger(DiscountController.class);
         logger.info("DIGO-Info: " + requestPath);
-        return accountService.deleteAccount(id);
+        return discountService.getDiscount(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public AffectedRowsDto deleteOption(HttpServletRequest request, @PathVariable String id){
+        String requestPath = request.getMethod() + " " + request.getRequestURI()
+                + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+        Logger logger = LoggerFactory.getLogger(DiscountController.class);
+        logger.info("DIGO-Info: " + requestPath);
+        return discountService.deleteAccount(id);
     }
 }

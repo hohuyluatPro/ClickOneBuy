@@ -3,7 +3,7 @@ package com.online.CBuy.api;
 import com.online.CBuy.document.Account;
 import com.online.CBuy.dto.AffectedRowsDto;
 import com.online.CBuy.dto.LoginDto;
-import com.online.CBuy.dto.PostAccount;
+import com.online.CBuy.pojo.Account.PostAccount;
 import com.online.CBuy.repository.AccountRepository;
 import com.online.CBuy.service.AccountService;
 import com.online.CBuy.service.JwtBlacklistService;
