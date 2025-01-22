@@ -28,6 +28,8 @@ public class Discount {
 
     private double value;
 
+    private String type;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private Date fromDate;
 

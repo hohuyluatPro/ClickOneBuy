@@ -31,6 +31,9 @@ public class DiscountService {
             if(Objects.nonNull(setDiscount.getDescription())){
                 discount1.setDescription(setDiscount.getDescription());
             }
+            if(Objects.nonNull(setDiscount.getType())){
+                discount1.setType(setDiscount.getType());
+            }
             if(Objects.nonNull(setDiscount.getFromDate())){
                 discount1.setFromDate(setDiscount.getFromDate());
             }
@@ -68,6 +71,9 @@ public class DiscountService {
             if(Objects.nonNull(setDiscount.getDescription())){
                 discount.setDescription(setDiscount.getDescription());
             }
+            if(Objects.nonNull(setDiscount.getType())){
+                discount.setType(setDiscount.getType());
+            }
             if(Objects.nonNull(setDiscount.getFromDate())){
                 discount.setFromDate(new Date(df.format(setDiscount.getFromDate())));
             }
@@ -99,7 +105,7 @@ public class DiscountService {
         return discountRepository.findOneById(new ObjectId(id));
     }
 
-    public AffectedRowsDto deleteAccount(String id){
+    public AffectedRowsDto deleteDiscount(String id){
         AffectedRowsDto affectedRowsDto = new AffectedRowsDto(0);
         Optional<Discount> existingDiscount = discountRepository.findById(id);
         if (existingDiscount.isPresent()) {

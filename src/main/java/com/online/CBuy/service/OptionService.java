@@ -78,7 +78,7 @@ public class OptionService {
         return optionRepository.findOneById(new ObjectId(id));
     }
 
-    public AffectedRowsDto deleteAccount(String id){
+    public AffectedRowsDto deleteOption(String id){
         AffectedRowsDto affectedRowsDto = new AffectedRowsDto(0);
         Optional<Option> existingOption = optionRepository.findById(id);
         if (existingOption.isPresent()) {

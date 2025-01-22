@@ -16,12 +16,12 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API Documentation for My Application")
+                        .title("API Documentation for ClickOneBuy")
                         .version("1.0.0")
-                        .description("This is the API documentation for the Spring Boot project.")
+                        .description("This is the API documentation for the CBuy project.")
                         .contact(new Contact()
-                                .name("Your Name")
-                                .email("your.email@example.com")
+                                .name("Hồ Huy Luật")
+                                .email("hohuyluat1@gmail.com")
                                 .url("https://example.com")))
         .components(new Components()
                 .addSecuritySchemes("BearerAuth",

@@ -73,6 +73,6 @@ public class OptionController {
                 + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
         Logger logger = LoggerFactory.getLogger(OptionController.class);
         logger.info("DIGO-Info: " + requestPath);
-        return optionService.deleteAccount(id);
+        return optionService.deleteOption(id);
     }
 }

@@ -17,36 +17,25 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "order")
-public class Order {
+@Document(collection = "rate")
+public class Rate {
     @Id
     @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
 
     private ObjectId userId;
 
-    private String address;
+    private ObjectId productId;
 
-    private int status;
+    private Double score;
 
-    private List<Cart> listOrder;
+    private List<Object> fileImage;
 
-    private Double total;
-
-    private Double cost;
-
-    private Double paid;
-
-    private String note;
-
-    private ObjectId KMId;
-
-    private Double priceDiscount;
+    private String comment;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private Date createdDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private Date updateDate;
-
 }

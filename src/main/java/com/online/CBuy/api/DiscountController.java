@@ -69,6 +69,6 @@ public class DiscountController {
                 + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
         Logger logger = LoggerFactory.getLogger(DiscountController.class);
         logger.info("DIGO-Info: " + requestPath);
-        return discountService.deleteAccount(id);
+        return discountService.deleteDiscount(id);
     }
 }
