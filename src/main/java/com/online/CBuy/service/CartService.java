@@ -49,7 +49,7 @@ public class CartService {
                 affectedRowsDto.setMessage("success");
                 affectedRowsDto.setAffectedRows(1);
             } catch (Exception e){
-                affectedRowsDto.setMessage("save false");
+                affectedRowsDto.setMessage("save fail");
             }
         } else {
             affectedRowsDto.setMessage("Already exists");
@@ -85,7 +85,7 @@ public class CartService {
                 affectedRowsDto.setMessage("success");
                 affectedRowsDto.setAffectedRows(1);
             } catch (Exception e){
-                affectedRowsDto.setMessage("update false");
+                affectedRowsDto.setMessage("update fail");
             }
         } else {
             affectedRowsDto.setMessage("Not found");
@@ -121,7 +121,7 @@ public class CartService {
                 affectedRowsDto.setMessage("success");
                 affectedRowsDto.setAffectedRows(1);
             } catch (Exception e){
-                affectedRowsDto.setMessage("update false");
+                affectedRowsDto.setMessage("update fail");
             }
         } else {
             affectedRowsDto.setMessage("Not found");

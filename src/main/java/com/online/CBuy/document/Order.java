@@ -29,7 +29,7 @@ public class Order {
 
     private int status;
 
-    private List<Cart> listOrder;
+    private List<ObjectId> listProductId;
 
     private Double total;
 
@@ -39,7 +39,7 @@ public class Order {
 
     private String note;
 
-    private ObjectId KMId;
+    private List<ObjectId> KMId;
 
     private Double priceDiscount;
 

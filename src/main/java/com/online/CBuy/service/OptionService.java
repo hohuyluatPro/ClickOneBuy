@@ -34,7 +34,7 @@ public class OptionService {
                     affectedRowsDto.setAffectedRows(1);
                     affectedRowsDto.setMessage("success");
                 } catch (Exception e){
-                    affectedRowsDto.setMessage("save false");
+                    affectedRowsDto.setMessage("save fail");
                 }
             } else {
                 affectedRowsDto.setMessage("Already exists");
@@ -62,7 +62,7 @@ public class OptionService {
                 affectedRowsDto.setAffectedRows(1);
                 affectedRowsDto.setMessage("success");
             } catch (Exception e){
-                affectedRowsDto.setMessage("save false");
+                affectedRowsDto.setMessage("save fail");
             }
         } else {
             affectedRowsDto.setMessage("not found");

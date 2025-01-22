@@ -50,7 +50,7 @@ public class DiscountService {
                 affectedRowsDto.setAffectedRows(1);
                 affectedRowsDto.setMessage("success");
             } catch (Exception e){
-                affectedRowsDto.setMessage("save false");
+                affectedRowsDto.setMessage("save fail");
             }
         } else {
             affectedRowsDto.setMessage("Already exists");
@@ -89,7 +89,7 @@ public class DiscountService {
                 affectedRowsDto.setAffectedRows(1);
                 affectedRowsDto.setMessage("success");
             } catch (Exception e){
-                affectedRowsDto.setMessage("update false");
+                affectedRowsDto.setMessage("update fail");
             }
         } else {
             affectedRowsDto.setMessage("not found");
