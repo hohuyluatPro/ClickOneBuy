@@ -30,6 +30,8 @@ public class GetAccountDto {
 
     private String phoneNumber;
 
+    private String email;
+
     private String address;
 
     private Agency province;

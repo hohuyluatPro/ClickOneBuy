@@ -56,6 +56,9 @@ public class AccountService {
         if(Objects.nonNull(postAccount.getPhoneNumber())){
             account1.setPhoneNumber(postAccount.getPhoneNumber());
         }
+        if(Objects.nonNull(postAccount.getEmail())){
+            account1.setEmail(postAccount.getEmail());
+        }
         if(Objects.nonNull(postAccount.getAddress())){
             account1.setAddress(postAccount.getAddress());
         }
@@ -107,6 +110,9 @@ public class AccountService {
             }
             if (Objects.nonNull(putAccount.getPhoneNumber())) {
                 account1.setPhoneNumber(putAccount.getPhoneNumber());
+            }
+            if(Objects.nonNull(putAccount.getEmail())){
+                account1.setEmail(putAccount.getEmail());
             }
             if (Objects.nonNull(putAccount.getAddress())) {
                 account1.setAddress(putAccount.getAddress());

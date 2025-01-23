@@ -31,6 +31,9 @@ public class PostAccount implements Serializable {
     @JsonProperty("phoneNumber")
     private String phoneNumber;
 
+    @JsonProperty("email")
+    private String email;
+
     @JsonProperty("address")
     private String address;
 

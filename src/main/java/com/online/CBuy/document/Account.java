@@ -37,6 +37,7 @@ public class Account {
 
     private String identifiNumber;
 
+    private String email;
 
     private String phoneNumber;
 
