@@ -2,6 +2,8 @@ package com.online.CBuy.config;
 
 
 import com.online.CBuy.filter.JwtRequestFilter;
+import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
+import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -34,7 +35,7 @@ public class SecurityConfig {
         http.cors(withDefaults()) // Kích hoạt cấu hình CORS
                 .csrf(csrf -> csrf.disable()) // Thay đổi cấu hình csrf
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**",          // Cho phép endpoint không cần JWT
+                        .requestMatchers("/api/auth/**", "/auth/token/**"  ,       // Cho phép endpoint không cần JWT
                                 "/swagger-ui/**",        // Cho phép Swagger UI
                                 "/v3/api-docs/**",       // Cho phép API docs
                                 "/swagger-ui.html" ).permitAll() // Cho phép không cần xác thực
@@ -61,9 +62,17 @@ public class SecurityConfig {
         return source;
     }
 
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+
+
+    @Bean
+    public KeycloakAuthenticationProvider keycloakAuthenticationProvider() {
+        return new KeycloakAuthenticationProvider();
     }
 }

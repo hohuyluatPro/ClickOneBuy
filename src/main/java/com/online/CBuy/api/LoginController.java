@@ -9,6 +9,8 @@ import com.online.CBuy.service.AccountService;
 import com.online.CBuy.service.JwtBlacklistService;
 import com.online.CBuy.tUtils.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +48,11 @@ public class LoginController {
         return accountService.postAccount(account);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto account) {
-        Optional<Account> existingAccount = accountRepository.findByUsername(account.getUsername());
-        if (existingAccount.isPresent() && passwordEncoder.matches(account.getPassword(), existingAccount.get().getPassword())) {
-            String token = jwtUtil.generateToken(existingAccount.get());
-            return ResponseEntity.ok(Map.of("token", token));
-        }
-        return ResponseEntity.status(401).body("Invalid username or password");
+
+    @PostMapping("/login-v3")
+    public Map<String, String> loginv2(@RequestBody LoginDto credentials) {
+        // Trả về mã `authentication_code`
+        return Map.of("authentication_code", "123456");
     }
 
     @PostMapping("/logout")
